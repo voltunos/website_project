@@ -7,7 +7,7 @@ require_once 'database.php';
 ?>
 
 <head>
-    <title>Blendburger</title>
+    <title>Iniciar sesión</title>
 
     <link href="style.css" rel="stylesheet"> 
 
@@ -25,4 +25,11 @@ require_once 'database.php';
         </div>
         <a href="login.php"><img class="icon" src="../images/user.png"><span class="uitext">Iniciar sesión</span></a>
     </header>
+    <div class="account-form">
+        <span class="account-form-title">Iniciar sesión</span>
+        <hr class="account-hr">
+        <div class="account-form-info">
+            <span class="account-form-text">Correo electrónico o DNI</span>
+        </div>
+    </div>
 </body>
