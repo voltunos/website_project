@@ -13,7 +13,7 @@ unset($_SESSION['success']);
 <!DOCTYPE html>
 
 <head>
-    <title>Iniciar sesión</title>
+    <title>Registrarse</title>
 
     <link href="style.css" rel="stylesheet"> 
     <link href="../images/logo_mini.png" rel="icon" type="image/png">
@@ -28,9 +28,9 @@ unset($_SESSION['success']);
     <header class="sidebar">
         <a href="main.php"><img class ="logo-account" src="../images/logo.png"></a>
     </header>
-    <form class="account-form" action="login_process.php" method="POST">
+    <form class="account-form" action="register_process.php" method="POST">
         <div class="account-form-start">
-            <span class="account-form-title">Iniciar sesión</span>
+            <span class="account-form-title">Registrarse</span>
             <img class="logo-big" src="../images/logo_big.png">
         </div>
         <hr class="account-hr">
@@ -40,9 +40,24 @@ unset($_SESSION['success']);
             <span class="account-form-additional">Dirección de correo válida</span>
         </div>
         <div class="account-form-info">
+            <span class="account-form-text">Nombre</span>
+            <input class="account-form-input" type="text" name="nombre" placeholder="Nombre" required>
+            <span class="account-form-additional">Nombre completo</span>
+        </div>
+        <div class="account-form-info">
+            <span class="account-form-text">Apellido</span>
+            <input class="account-form-input" type="text" name="apellido" placeholder="Apellido" required>
+            <span class="account-form-additional">Apellido completo</span>
+        </div>
+        <div class="account-form-info">
+            <span class="account-form-text">Teléfono</span>
+            <input class="account-form-input" type="number" maxlength="10" name="telefono" placeholder="Teléfono" required>
+            <span class="account-form-additional">En caso de que necesitemos contactarte</span>
+        </div>
+        <div class="account-form-info">
             <span class="account-form-text">Contraseña</span>
             <input class="account-form-input" type="password" name="contra" placeholder="Contraseña" required>
-            <span class="account-form-additional">Contraseña válida</span>
+            <span class="account-form-additional">Contraseña con 8 dígitos o más</span>
         </div>
         <?php
         if ($error) {
@@ -54,7 +69,7 @@ unset($_SESSION['success']);
         ?>
         <button type="submit" class="account-button">Continuar</button>
         <div class="account-buttons">
-            <a href="register.php" class="account-button">Registrarse</a>
+            <a href="login.php" class="account-button">Iniciar sesión</a>
             <a href="help.php" class="account-button">Ayuda</a>
         </div>
     </div>
