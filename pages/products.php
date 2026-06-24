@@ -58,9 +58,11 @@ $productos = $stmt->fetchAll(PDO::FETCH_ASSOC);
         <hr class="account2-hr">
         <?php
         foreach($productos as $producto) {
-            $imagen = base64_encode($producto['imagen']);
+            $imagen = "../uploads/products/".$producto['imagen'];
             echo '<div class="product-edit">';
-            echo '<img src="data:image/jpeg;base64,' . $imagen . '"  class="product-edit-image">';
+            echo '<figure class="product-edit-figure">';
+            echo '<img src="'.$imagen.'" class="product-edit-image">';
+            echo '</figure>';
             echo '<span class="product-edit-info">'.$producto['nombre'].'</span>';
             echo '<span class="product-edit-info">$'.$producto['precio'].'</span>';
             echo '<span class="product-edit-description">'.$producto['descripcion'].'</span>';
@@ -79,8 +81,9 @@ $productos = $stmt->fetchAll(PDO::FETCH_ASSOC);
             echo '<hr class="account2-hr">';
         }
         ?>
-        <div class="product-edit">
-            <a href="add_product.php"><img src="../images/add.png" class="icon"><span class="account2-text">Agregar producto</span></a>
+        <div class="product-edit-more">
+            <a href="add_product.php"><img src="../images/add.png" class="icon"><span class="product-edit-additional">Agregar producto</span></a>
+            <a href="deactivated_products.php"><span class="product-edit-additional">Productos desactivados</span><img src="../images/deactivated.png" class="icon"></a>
         </div>
     </div>
 </body>

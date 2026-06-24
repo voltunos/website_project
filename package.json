@@ -1,0 +1,32 @@
+{
+  "name": "website_project",
+  "version": "1.0.0",
+  "description": "",
+  "homepage": "https://github.com/voltunos/website_project#readme",
+  "bugs": {
+    "url": "https://github.com/voltunos/website_project/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/voltunos/website_project.git"
+  },
+  "license": "ISC",
+  "author": "voltunos",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon src/index.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.6",
+    "dotenv": "17.3.1",
+    "express": "5.2.1",
+    "express-rate-limit": "8.5.2",
+    "mercadopago": "^3.1.0",
+    "morgan": "1.10.1",
+    "mysql2": "^3.22.0"
+  },
+  "devDependencies": {
+    "nodemon": "3.1.14"
+  }
+}

@@ -2,6 +2,7 @@
 
 session_start();
 require_once 'database.php';
+require_once '../services/image_service.php';
 
 $categoriaSeleccionada = $_GET['category'] ?? null;
 
@@ -70,8 +71,8 @@ $estado = $stmt4->fetch(PDO::FETCH_ASSOC);
         </div>
         <div class="state">
             <?php
-            $estado_imagen = base64_encode($estado['imagen']);
-            echo '<img src="data:image/jpeg;base64,' . $estado_imagen . '"  class="icon"><span class="uitext">'.$estado['texto'].'</span>';
+            $estado_imagen = ImageService::getImage($estado['imagen'], "../uploads/states/");
+            echo '<img src="'.$estado_imagen.'" class="icon"><span class="uitext">'.$estado['texto'].'</span>';
             ?>
         </div>
         <?php
@@ -79,10 +80,13 @@ $estado = $stmt4->fetch(PDO::FETCH_ASSOC);
             echo '<div class="header-account-info">';
             echo '<img src="../images/notification.png" class="icon-big">';
             echo '<a href="blendpoints.php"><img class="icon-big" src="../images/blendpoints.png"><span class="uitext">'.$blendpoints.'</span></a>';
-            echo '<a href="account.php"><img class="icon-big" src="../images/user.png"><span class="uitext">Cuenta</span></a>';
+            echo '<a href="account.php"><img class="icon-big" src="../images/user.png"><span class="uitext hide-mobile">Cuenta</span></a>';
             echo '</div>';
         } else {
+            echo '<div class="header-account-info">';
+            echo '<div></div>';
             echo '<a href="login.php"><img class="icon-big" src="../images/login.png"><span class="uitext">Iniciar sesión</span></a>';
+            echo '</div>';
         }
         ?>
     </header>
@@ -95,10 +99,10 @@ $estado = $stmt4->fetch(PDO::FETCH_ASSOC);
         </div>
         <?php
         foreach ($categorias as $categoria) {
-            $imagen = base64_encode($categoria['imagen']);
+            $imagen = ImageService::getImage($categoria['imagen'] ,"../uploads/categories/");
             echo '<div class="type">';
             echo '<a href="main.php?category='.$categoria['nombre'].'" class="type">';
-            echo '<img src="data:image/jpeg;base64,' . $imagen . '"  class="type-image">';
+            echo '<img src="'.$imagen.'" class="type-image">';
             echo '<span class="type-text">'.$categoria['display'].'</span>';
             echo '</a>';
             echo '</div>';
@@ -107,16 +111,20 @@ $estado = $stmt4->fetch(PDO::FETCH_ASSOC);
     </div>
     <div class="products">
         <?php foreach ($productos as $producto) {
-            $imagen = base64_encode($producto['imagen']);
-            echo '<form class="product" action="addproduct.php" method="POST">';
+            $imagen = ImageService::getImage($producto['imagen'], "../uploads/products/");
+            echo '<form class="product" action="cart_process.php" method="POST">';
+            echo '<a href="product.php?id='.$producto['id_producto'].'">';
             echo '<figure>';
-            echo '<img src="data:image/jpeg;base64,' . $imagen . '"  class="product-image">';
+            echo '<img src="'.$imagen.'" class="product-image">';
             echo '</figure>';
+            echo '</a>';
             echo '<div class="product-info">';
             echo '<span class="product-title">'.$producto['nombre'].'</span>';
             echo '<span class="product-price">$'.$producto['precio'].'</span>';
             echo '<span class="product-description">'.$producto['descripcion'].'</span>';
             echo '<input type="hidden" name="id_producto" value="'.$producto['id_producto'].'">';
+            echo '<input type="hidden" name="action" value="add">';
+            echo '<input type="hidden" name="redirect" value="main">';
             echo '</div>';
             echo '<button type="submit" class="product-button">Agregar</button>';
             echo '</form>';

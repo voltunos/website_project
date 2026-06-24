@@ -38,7 +38,7 @@ $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
         <hr class="account2-main-hr">
         <span class="account2-subtitle">General</span>
         <div class="account2-info">
-            <a href="profile.php"><img src="../images/profile.png" class="icon"><span class="account2-text">Mi perfil</span></a>
+            <a href="myprofile.php"><img src="../images/profile.png" class="icon"><span class="account2-text">Mi perfil</span></a>
         </div>
         <div class="account2-info">
             <a href="directions.php"><img src="../images/direction.png" class="icon"><span class="account2-text">Direcciones</span></a>
@@ -63,7 +63,16 @@ $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
         if ($usuario['rol'] == "Administrador") {
             echo '<span class="account2-subtitle">Opciones de administrador</span>';
             echo '<div class="account2-info">';
-            echo '<a href="order_record.php"><img src="../images/order_record.png" class="icon"><span class="account2-text">Historial de pedidos</span></a>';
+            echo '<a href="audit.php"><img src="../images/audit.png" class="icon"><span class="account2-text">Registro de auditoria</span></a>';
+            echo '</div>';
+            echo '<div class="account2-info">';
+            echo '<a href="orders.php"><img src="../images/order.png" class="icon"><span class="account2-text">Pedidos</span></a>';
+            echo '</div>';
+            echo '<div class="account2-info">';
+            echo '<a href="refunds.php"><img src="../images/refunds.png" class="icon"><span class="account2-text">Devoluciones y reembolsos</span></a>';
+            echo '</div>';
+            echo '<div class="account2-info">';
+            echo '<a href="completed.php"><img src="../images/completed.png" class="icon"><span class="account2-text">Pedidos completados o cancelados</span></a>';
             echo '</div>';
             echo '<div class="account2-info">';
             echo '<a href="products.php"><img src="../images/products.png" class="icon"><span class="account2-text">Productos</span></a>';
@@ -72,7 +81,7 @@ $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
             echo '<a href="user_manage.php"><img src="../images/user_manage.png" class="icon"><span class="account2-text">Gestionar usuarios</span></a>';
             echo '</div>';
             echo '<div class="account2-info">';
-            echo '<a href="refunds.php"><img src="../images/refunds.png" class="icon"><span class="account2-text">Devoluciones y reembolsos</span></a>';
+            echo '<a href="categories.php"><img src="../images/categories.png" class="icon"><span class="account2-text">Categorias de productos</span></a>';
             echo '</div>';
             echo '<div class="account2-info">';
             echo '<a href="state.php"><img src="../images/state.png" class="icon"><span class="account2-text">Establecer estado de la página</span></a>';
