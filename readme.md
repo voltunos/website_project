@@ -78,8 +78,108 @@ project/
 
 ---
 
-IMPORTANT
-.env file must include the next values:
--MERCADOPAGO_API_KEY
--FRONTEND_URL
--FRONTEND_BASEURL
+## Installation
+
+### 1. Clone the repository
+
+```bash
+git clone https://github.com/voltunos/website_project/blendburger.git
+```
+
+### 2. Install Node dependencies
+
+```bash
+cd node
+npm install
+```
+
+### 3. Configure environment variables
+
+Create a `.env` file inside the Node project.
+
+Example:
+
+```env
+PORT=3000
+MERCADOPAGO_API_KEY=YOUR_ACCESS_TOKEN
+FRONTEND_URL=http://localhost/website_project/pages
+```
+
+---
+
+### 4. Import the database
+
+Import the provided SQL file into MySQL.
+
+Update `database.php` with your database credentials.
+
+---
+
+### 5. Start XAMPP
+
+Start:
+
+- Apache
+- MySQL
+
+---
+
+### 6. Start the Node server
+
+```bash
+npm run dev
+```
+
+---
+
+### 7. Start ngrok
+
+Mercado Pago webhooks require a public HTTPS URL.
+
+Expose your local server:
+
+```bash
+ngrok http 3000
+```
+
+Copy the generated HTTPS URL and update:
+
+- `notification_url`
+- `back_urls`
+
+inside the Mercado Pago configuration.
+
+---
+
+## Security
+
+Some implemented security features include:
+
+- Password hashing.
+- Prepared Statements (PDO).
+- Input validation.
+- Output escaping.
+- Role-based authorization.
+- Session authentication.
+- Secure image uploads.
+- Server-side payment validation.
+- Cart validation before checkout.
+
+---
+
+## Future Improvements
+
+- Email verification.
+- Password recovery.
+- Order tracking.
+- Sales dashboard.
+- Search and filtering.
+- Product reviews.
+- Two-factor authentication.
+- Docker deployment.
+
+---
+
+## Screenshots
+
+*(Coming soon)*
