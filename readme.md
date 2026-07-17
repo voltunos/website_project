@@ -4,13 +4,13 @@ A restaurant web page built in with PHP, MySQL, JavaScript and Node.js.
 
 The project allows customers to browse products, manage their cart, place orders, and pay online through Mercado Pago. It also includes a complete administration panel for managing users, products, categories, orders, addresses, and application settings.
 
-# Current status: Under development.
+## Current status: Under development.
 
 ---
 
-### Features
+## Features
 
-## Client
+### Client
 - User registration and authentication.
 - Profile management.
 - Adress management system.
@@ -19,7 +19,7 @@ The project allows customers to browse products, manage their cart, place orders
 - Mercado Pago integration.
 - Blendpoints reward system.
 
-## Administration
+### Administration
 - User management.
 - Role management.
 - Ban / Unban users.
@@ -32,28 +32,28 @@ The project allows customers to browse products, manage their cart, place orders
 
 ---
 
-### Tech
+## Tech
 
-## Backend
+### Backend
 - PHP 8
 - Node.js
 - Express
 - MySQL
 - Mercado Pago SDK
 
-## Frontend
+### Frontend
 - HTML5
 - CSS3
 - JavaScript
 
-## Database and other tools
+### Database and other tools
 - XAMPP
 - Ngrok
 - Git
 
 ---
 
-### Project Structure
+## Project Structure
 
 ```
 project/
