@@ -182,4 +182,7 @@ Some implemented security features include:
 
 ## Screenshots
 
-*(Coming soon)*
+<img width="1902" height="911" alt="image" src="https://github.com/user-attachments/assets/67f8e4d8-ba3a-49b5-94ad-9a8743759d4d" />
+<img width="1919" height="913" alt="image" src="https://github.com/user-attachments/assets/c7e7e426-f1f1-4116-9953-9ce91cf8c9e4" />
+
+
