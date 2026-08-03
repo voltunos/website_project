@@ -1,7 +1,7 @@
 <?php
 
 $host = "localhost";
-$db = "website_project";
+$db = "blendburger";
 $user = "blendburger_user";
 $pass = "Y6lCRqhN5g1vojBxFTymHzfPh17X3IU5CK5qOJ7UHkZ9L4gcjm";
 

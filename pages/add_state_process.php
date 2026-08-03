@@ -5,13 +5,13 @@ require_once 'database.php';
 require_once 'role_verify.php';
 require_once '../services/image_service.php';
 
-requireRole(["Administrador"], $pdo);
+requireRole(["Administrador", "Dueño"], $pdo);
 
 $nombre = $_POST['nombre'] ?? '';
 $texto = $_POST['texto'] ?? '';
-$compras = $_POST['compras'] ?? '';
+$compras = $_POST['compras'] ?? null;
 
-if (empty($nombre) || empty($texto) || empty($compras)) {
+if (empty($nombre) || empty($texto) || $compras === null) {
     $_SESSION['error'] = "Los campos obligatorios están vacios.";
     header("Location: state.php");
     exit();

@@ -118,6 +118,11 @@ $data = $stmt2->fetch(PDO::FETCH_ASSOC);
             <img src="../images/blendpoints.png" class="icon">
             <span class="account-form-text"><b><?php echo $blendPoints; ?></b> Puntos Blend con tu compra</span>
         </div>
+        <div class="checkout-form">
+            <input class="account-form-input" type="text" name="adicional" placeholder="Adicional" form="checkout">
+            <span class="account-form-additional">Información adicional para el pedido (por ej.: Sin cierto ingrediente, etc.)</span>
+
+        </div>
         <button type="submit" class="account-button" form="checkout">Continuar</button>
         <span class="purchase-info">El siguiente paso es el último para finalizar el encargo del pedido.</span>
     </div>

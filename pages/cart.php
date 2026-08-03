@@ -35,6 +35,11 @@ $stmt2->execute([
 
 $direcciones = $stmt2->fetchAll(PDO::FETCH_ASSOC);
 
+$stmt4 = $pdo->prepare("SELECT * FROM estado WHERE activo = 1 LIMIT 1");
+$stmt4 -> execute();
+
+$estado = $stmt4->fetch(PDO::FETCH_ASSOC);
+
 ?>
 
 <!DOCTYPE html>
@@ -97,86 +102,53 @@ $direcciones = $stmt2->fetchAll(PDO::FETCH_ASSOC);
             </div>
             <hr class="account-hr">
             <?php
-            foreach ($productos as $producto) {
-                $cantidad = $carrito[$producto['id_producto']];
-                $subtotal = $producto['precio'] * $cantidad;
+            if (!empty($carrito)) {
+                foreach ($productos as $producto) {
+                    $cantidad = $carrito[$producto['id_producto']];
+                    $subtotal = $producto['precio'] * $cantidad;
+                    echo '<div class="purchase">';
+                    echo '<span class="purchase-info">x'.$cantidad.' '.$producto['nombre'].'</span>';
+                    echo '<span class="purchase-price">$'.$subtotal.'</span>';
+                    echo '</div>';
+                }
                 echo '<div class="purchase">';
-                echo '<span class="purchase-info">x'.$cantidad.' '.$producto['nombre'].'</span>';
-                echo '<span class="purchase-price">$'.$subtotal.'</span>';
+                echo '<span class="purchase-info">Envío</span>';
+                echo '<span class="purchase-price">$'.$envio.'</span>';
                 echo '</div>';
+                echo '<hr class="account-hr">';
+                echo '<div class="purchase">';
+                echo '<span class="purchase-info">Subtotal:</span>';
+                echo '<span class="purchase-price">$'.$total.'</span>';
+                echo '</div>';
+                echo '<form class="direction-select" id="checkout" action="checkout.php" method="POST">';
+                echo '<img src="../images/direction2.png" class="icon">';
+                echo '<span class="cart-text">Enviar a </span>';
+                echo '<select class="cart-direction" name="direccion" required>';
+                foreach ($direcciones as $direccion) {
+                    echo '<option value="' . htmlspecialchars($direccion['id_direccion'], ENT_QUOTES, 'UTF-8') . '" ' .
+                        '>' . htmlspecialchars($direccion['calle'], ENT_QUOTES, 'UTF-8') . ' '. htmlspecialchars($direccion['numero'], ENT_QUOTES, 'UTF-8') .
+                        '</option>';
+                }
+                echo '</select>';
+                echo '</form>';
+                $message = "Continuar";
+                $extra = "";
+                if ($estado['compras'] == 0) {
+                    $message = "Las compras están desactivadas";
+                    $extra = "disabled";
+                }
+                echo '<button class="cart-button" type="submit" '.$extra.' form="checkout">'.$message.'</button>';
+            } else {
+                echo '<span class="purchase-info">Agrega un producto al carrito para empezar a ver tu pedido.</span>';
             }
+            echo '<span class="cart-text">Métodos de pago aceptados:</span>';
+            echo '<div class="direction-select">';
+            echo '<img class="icon" src="../images/mp.png">';
+            echo '<img class="icon" src="../images/transferencia.png">';
+            echo '<img class="icon" src="../images/cash.png">';
+            echo '</div>';
+            echo '<span class="purchase-info">El precio del envío y los cupones se mostrarán a continuación.</span>';
             ?>
-            <div class="purchase">
-                <span class="purchase-info">Envío</span>
-                <span class="purchase-price">$<?php echo $envio; ?></span>
-            </div>
-            <hr class="account-hr">
-            <div class="purchase">
-                <span class="purchase-info">Subtotal:</span>
-                <span class="purchase-price">$<?php echo $total; ?></span>
-            </div>
-            <form class="direction-select" id="checkout" action="checkout.php" method="POST">
-                <img src="../images/direction2.png" class="icon">
-                <span class="cart-text">Enviar a </span>
-                <select class="cart-direction" name="direccion" required>
-                    <?php
-                        foreach ($direcciones as $direccion) {
-                            echo '<option value="' . htmlspecialchars($direccion['id_direccion'], ENT_QUOTES, 'UTF-8') . '" ' .
-                                '>' . htmlspecialchars($direccion['calle'], ENT_QUOTES, 'UTF-8') . ' '. htmlspecialchars($direccion['numero'], ENT_QUOTES, 'UTF-8') .
-                                '</option>';
-                        }
-                    ?>
-                </select>
-            </form>
-                <button class="cart-button" type="submit" form="checkout">Continuar</button>
-            <!-- <script>
-                const checkout = document.getElementById('checkout');
-
-                checkout.addEventListener('click', async() => {
-                    try {
-                        const getCart = await fetch("get_cart.php");
-                        const cart = await getCart.json();
-
-                        if (!cart || Object.keys(cart).length === 0) {
-                            alert("Cart is empty");
-                            return;
-                        }
-
-                        const userId = <?php echo $_SESSION['id_usuario'] ?? 'null'; ?>;
-                        if (!userId) {
-                            alert("User ID not found");
-                            return;
-                        }
-
-                        const response = await fetch("http://localhost:3000/api/payments/create-order", {
-                            method: 'POST',
-                            headers: { "Content-Type": "application/json" },
-                            body: JSON.stringify({
-                                carrito: cart,
-                                id_usuario: Number(userId)
-                            })
-                        });
-
-                        if (!response.ok) {
-                            throw new Error("Error trying to create order");
-                        }
-
-                        const data = await response.json();
-
-                        window.location.href = data.init_point;
-                    } catch(error) {
-                        console.error(error);
-                        alert("Error trying to process payment");
-                    }
-                });
-            </script> -->
-            <span class="cart-text">Métodos de pago aceptados:</span>
-            <div class="direction-select">
-                <img class="icon" src="../images/mp.png">
-                <img class="icon" src="../images/transferencia.png">
-                <img class="icon" src="../images/cash.png">
-            </div>
-            <span class="purchase-info">El precio del envío y los cupones se mostrarán a continuación.</span>
         </div>
     </div>
 </body>

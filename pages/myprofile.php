@@ -15,6 +15,13 @@ if (!$usuario) {
     header("Location: main.php");
     exit();
 }
+
+$error = $_SESSION['error'] ?? '';
+unset($_SESSION['error']);
+
+$success = $_SESSION['success'] ?? '';
+unset($_SESSION['success']);
+
 ?>
 
 <!DOCTYPE html>
@@ -36,6 +43,14 @@ if (!$usuario) {
         <a href="main.php"><img class ="logo" src="../images/logo.png"></a>
         <a href="account.php"><span class="uitext">Volver</span></a>
     </header>
+    <?php
+        if ($error) {
+            echo '<span class="edit-error">'.$error.'</span>';
+        }
+        if ($success) {
+            echo '<span class="edit-success">'.$success.'</span>';
+        }
+    ?>
     <div class="myprofile">
         <div class="myprofile-tabs">
             <div class="myprofile-tab" onclick="showTab('profile')">
@@ -88,11 +103,11 @@ if (!$usuario) {
             </div>
             <div class="myprofile-section">
                 <span class="myprofile-text">Cambiar contraseña</span>
-                <input form="password" class="myprofile-input" type="text" name="passnow" placeholder="Contraseña actual" required>
+                <input form="password" class="myprofile-input" type="password" name="passnow" placeholder="Contraseña actual" required>
                 <span class="myprofile-additional">Contraseña actual de la cuenta</span>
-                <input form="password" class="myprofile-input" type="text" name="pass1" placeholder="Nueva contraseña" required>
+                <input form="password" class="myprofile-input" type="password" name="pass1" placeholder="Nueva contraseña" required>
                 <span class="myprofile-additional">Nueva contraseña (debe tener 8 dígitos o más)</span>
-                <input form="password" class="myprofile-input" type="text" name="pass2" placeholder="Repetir nueva contraseña" required>
+                <input form="password" class="myprofile-input" type="password" name="pass2" placeholder="Repetir nueva contraseña" required>
                 <span class="myprofile-additional">Repetir nueva contraseña</span>
             </div>
             <button form="password" class="myprofile-button" type="submit">Cambiar contraseña</button>

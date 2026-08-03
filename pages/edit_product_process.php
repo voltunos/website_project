@@ -5,7 +5,7 @@ require_once 'database.php';
 require_once 'role_verify.php';
 require_once '../services/image_service.php';
 
-requireRole(["Administrador"], $pdo);
+requireRole(["Administrador", "Dueño"], $pdo);
 
 $id_producto = $_POST['id_producto'] ?? '';
 $nombre = $_POST['nombre'] ?? '';

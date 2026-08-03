@@ -20,7 +20,7 @@ if ($method === "profile_change") {
 
         if (empty($nombre) || empty($apellido) || empty($telefono)) {
             $_SESSION['error'] = "Los campos obligatorios están vacios.";
-            header("Location: main.php");
+            header("Location: myprofile.php");
             exit();
         }
 
@@ -51,6 +51,7 @@ if ($method === "profile_change") {
                 ":id_usuario" => $id_usuario
             ]);
         }
+        $_SESSION['success'] = "Se realizaron los cambios al perfil correctamente.";
     } catch (Exception $e) {
         $_SESSION['error'] = $e->getMessage();
         header("Location: myprofile.php");
@@ -86,6 +87,12 @@ if ($method === "profile_change") {
             exit();
         }
 
+        if (strlen($pass1) < 8) {
+            $_SESSION['error'] = "La contraseña debe tener al menos 8 caracteres.";
+            header("Location: myprofile.php");
+            exit();
+        }
+
         $passhash = password_hash($pass1, PASSWORD_DEFAULT);
 
         $stmt2 = $pdo->prepare("UPDATE users SET contra = :contra WHERE id_usuario = :id_usuario LIMIT 1");
@@ -93,6 +100,8 @@ if ($method === "profile_change") {
             ":contra" => $passhash,
             ":id_usuario" => $id_usuario
         ]);
+
+        $_SESSION['success'] = "Se cambió la contraseña correctamente.";
     } catch (Exception $e) {
         $_SESSION['error'] = $e->getMessage();
         header("Location: myprofile.php");

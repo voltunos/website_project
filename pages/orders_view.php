@@ -8,13 +8,15 @@ requireRole(["Administrador", "Dueño"], $pdo);
 
 $estado = $_GET['estado'] ?? '';
 $orden = $_GET['orden'] ?? 'asc';
+$id = $_GET['id'] ?? '';
 
-$query = "SELECT * FROM pedido WHERE estado IN ('Completado', 'Cancelado')";
+$query = "SELECT * FROM pedido WHERE id_usuario = :id_usuario";
 $params = [];
 
 if (!empty($estado)) {
     $query .= " AND estado = :estado";
     $params[':estado'] = $estado;
+    $params[':id_usuario'] = $id;
 }
 
 $orderDirection = ($orden === 'asc') ? 'ASC' : "DESC";
@@ -130,6 +132,41 @@ $pedidos = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     echo '</div>';
                 }
                 echo '</div>';
+                echo '<div class="order-buttons">';
+                foreach($availableActions as $action) {
+                    echo '<form action="order_action.php" method="POST">';
+                    echo '<input type="hidden" name="action" value="'.$action.'">';
+                    echo '<input type="hidden" name="id_pedido" value="'.$id.'">';
+                    $text = "";
+                    $bg = "";
+
+                    switch($action) {
+                        case "confirm":
+                            $text = "Confirmar pedido";
+                            $bg = "confirmed";
+                            break;
+                        case "deliver":
+                            $text = "Confirmar envío";
+                            $bg = "delivering";
+                            break;
+                        case "complete":
+                            $text = "Marcar como completado";
+                            $bg = "completed";
+                            break;
+                        case "cancel":
+                            $text = "Cancelar pedido";
+                            $bg = "cancelled";
+                            break;
+                        case "refund":
+                            $text = "Marcar como reembolsado";
+                            $bg = "refund";
+                            break;
+                    }
+                        
+                    echo '<button class="order-button" style="background-color:'.$stateBgColors[$bg].'" type="submit">'.$text.'</button>';
+                    echo '</form>';
+                }
+                echo '</div>';
                 echo '</div>';
             }
             ?>
@@ -146,14 +183,19 @@ $pedidos = $stmt->fetchAll(PDO::FETCH_ASSOC);
                         <label for="todos" class="filter-text">Todos</label>
                     </div>
                     <div class="filter-option">
-                        <input type="checkbox" id="completado" name="estado" value="Completado"
-                        <?php if ($estado === 'Completado') echo 'checked'; ?>>
-                        <label for="enproceso" class="filter-text">Completado</label>
+                        <input type="checkbox" id="enproceso" name="estado" value="En proceso"
+                        <?php if ($estado === 'En proceso') echo 'checked'; ?>>
+                        <label for="enproceso" class="filter-text">En proceso</label>
                     </div>
                     <div class="filter-option">
-                        <input type="checkbox" id="cancelado" name="estado" value="Cancelado"
-                        <?php if ($estado === 'Cancelado') echo 'checked'; ?>>
-                        <label for="confirmado" class="filter-text">Cancelado</label>
+                        <input type="checkbox" id="confirmado" name="estado" value="Confirmado"
+                        <?php if ($estado === 'Confirmado') echo 'checked'; ?>>
+                        <label for="confirmado" class="filter-text">Confirmado</label>
+                    </div>
+                    <div class="filter-option">
+                        <input type="checkbox" id="enviando" name="estado" value="Enviando"
+                        <?php if ($estado === 'Enviando') echo 'checked'; ?>>
+                        <label for="enviando" class="filter-text">Enviando</label>
                     </div>
                 </form>
                 <script>

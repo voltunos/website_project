@@ -4,7 +4,7 @@ session_start();
 require_once 'database.php';
 require_once '../services/image_service.php';
 require_once 'role_verify.php';
-requireRole(["Administrador"], $pdo);
+requireRole(["Administrador", "Dueño"], $pdo);
 
 $query = "SELECT * FROM pedido WHERE estado = 'Esperando reembolso'";
 

@@ -6,13 +6,20 @@ require_once '../services/image_service.php';
 
 $id = $_GET['id'] ?? null;
 
-$rol = $_SESSION['rol'] ?? "";
+if (isset($_SESSION['id_usuario'])) {
+    $stmt3 = $pdo->prepare("SELECT rol FROM users WHERE id_usuario = :id_usuario");
+    $stmt3->execute([
+        ":id_usuario" => $_SESSION['id_usuario']
+    ]);
+
+    $rol = $stmt3->fetchColumn();
+}
 
 if (empty($id)) {
     header("Location: main.php");
 }
 
-if ($rol === "Administrador") {
+if (isset($_SESSION['id_usuario']) && ($rol === "Administrador" || $rol === "Dueño")) {
     $stmt = $pdo->prepare("SELECT * FROM users WHERE id_usuario = :id_usuario LIMIT 1");
 } else {
     $stmt = $pdo->prepare("SELECT nombre, apellido, rol, imagen FROM users WHERE id_usuario = :id_usuario LIMIT 1");
@@ -43,6 +50,12 @@ $stmt4 = $pdo->prepare("SELECT * FROM estado WHERE activo = 1 LIMIT 1");
 $stmt4 -> execute();
 
 $estado = $stmt4->fetch(PDO::FETCH_ASSOC);
+
+$error = $_SESSION['error'] ?? '';
+unset($_SESSION['error']);
+
+$success = $_SESSION['success'] ?? '';
+unset($_SESSION['success']);
 
 ?>
 
@@ -112,7 +125,7 @@ $estado = $stmt4->fetch(PDO::FETCH_ASSOC);
         </div>
     </div>
     <?php
-    if ($rol === "Administrador") {
+    if (isset($_SESSION['id_usuario']) && ($rol === "Administrador" || $rol === "Dueño")) {
         echo '<div class="profile-admin">';
         echo '<span class="profile-admin-title">Panel de administrador</span>';
         echo '<hr class="profile-admin-hr">';
@@ -122,6 +135,12 @@ $estado = $stmt4->fetch(PDO::FETCH_ASSOC);
         echo '<div class="profile-admin-option"><img src="../images/created_at.png" class="icon"><span class="profile-admin-text">Creado en: '.$usuario['created_at'].'</span></div>';
         echo '<div class="profile-admin-option"><img src="../images/blendpoints_white.png" class="icon"><span class="profile-admin-text">Puntos Blend: '.$usuario['blendpoints'].'</span></div>';
         echo '</div>';
+        if ($error) {
+            echo '<span class="edit-error">'.$error.'</span>';
+        }
+        if ($success) {
+            echo '<span class="edit-success">'.$success.'</span>';
+        }
         echo '<div class="profile-admin-buttons">';
         if ($usuario['baneado'] == 0) {
             echo '<form id="ban" method="POST" action="user_modify.php">';
@@ -163,8 +182,16 @@ $estado = $stmt4->fetch(PDO::FETCH_ASSOC);
             $bg = $roleBgColors[$action];
             echo '</form>';
                 
-            echo '<button onclick="confirmAction(event, \'¿Dar el rol de '.$action.' al usuario <b>'.$name.' '.$secondName.'</b>?\')" class="profile-admin-button" style="background-color:'.$bg.'" type="button">'.$text.'</button>';
+            echo '<button onclick="confirmAction(event, \'¿Dar el rol de '.$action.' al usuario <b>'.$name.' '.$secondName.'</b>?\')" class="profile-admin-button" style="background-color:'.$bg.'" type="button" form="'.$action.'">'.$text.'</button>';
         }
+        echo '</div>';
+        echo '<div class="profile-admin-buttons">';
+        echo '<form id="blendpoints" action="user_modify.php" method="POST">';
+        echo '<input type="hidden" name="option" value="blendpoints">';
+        echo '<input type="hidden" name="id" value="'.$usuario['id_usuario'].'">';
+        echo '</form>';
+        echo '<button onclick="confirmBlendPoints()" class="profile-admin-button" style="background: linear-gradient(90deg, rgba(255, 167, 25, 1) 0%, rgba(255, 225, 0, 1) 100%); font-weight:bold; color:black;" type="button" form="blendpoints">Dar Puntos Blend</button>';
+        echo '<a href="orders_view.php?id='.$usuario['id_usuario'].'" class="profile-admin-button" style="background-color: navy;">Ver ordenes</a>';
         echo '</div>';
         echo '</div>';
     }
@@ -180,6 +207,18 @@ $estado = $stmt4->fetch(PDO::FETCH_ASSOC);
             </div>
         </div>
     </div>
+    <div id="blendPointsModal" class="modal">
+        <div class="modal-content">
+            <span class="modal-title">Dar Puntos Blend</span>
+            <hr class="modal-hr">
+            <span class="modal-text">Indique la cantidad de Puntos Blend a otorgar</span>
+            <input type="number" class="modal-input" form="blendpoints" name="additional">
+            <div class="modal-buttons">
+                <button class="modal-button" style="background-color: forestgreen" form="blendpoints" type="submit">Confirmar</button>
+                <button class="modal-button" style="background-color: darkred" onClick="closeModal()">Cancelar</button>
+            </div>
+        </div>
+        </div>
     <script>
         let currentForm = null;
 
@@ -195,6 +234,7 @@ $estado = $stmt4->fetch(PDO::FETCH_ASSOC);
 
         function closeModal() {
             document.getElementById('confirmModal').style.display = 'none';
+            document.getElementById('blendPointsModal').style.display = 'none';
         }
 
         document.getElementById('confirm').addEventListener('click', () => {
@@ -202,5 +242,9 @@ $estado = $stmt4->fetch(PDO::FETCH_ASSOC);
                 currentForm.submit();
             }
         });
+
+        function confirmBlendPoints() {
+            document.getElementById('blendPointsModal').style.display = 'flex';
+        }
     </script>
 </body>

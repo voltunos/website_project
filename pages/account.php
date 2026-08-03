@@ -60,7 +60,7 @@ $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
             <a href="logout.php"><img src="../images/logout.png" class="icon"><span class="account2-text">Cerrar sesión</span></a>
         </div>
         <?php
-        if ($usuario['rol'] == "Administrador") {
+        if ($usuario['rol'] == "Administrador" || $usuario['rol'] == "Dueño") {
             echo '<span class="account2-subtitle">Opciones de administrador</span>';
             echo '<div class="account2-info">';
             echo '<a href="audit.php"><img src="../images/audit.png" class="icon"><span class="account2-text">Registro de auditoria</span></a>';

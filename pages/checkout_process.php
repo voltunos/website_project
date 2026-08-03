@@ -5,6 +5,7 @@ require_once 'auth.php';
 
 $method = $_POST['metodo'] ?? '';
 $direccion = $_POST['id_direccion'] ?? '';
+$adicional = $_POST['adicional'] ?? '';
 
 if (empty($method) || empty($direccion)) {
     header("Location: cart.php");
@@ -19,6 +20,7 @@ if (!in_array($method, $validMethods)) {
 }
 
 $_SESSION['id_direccion'] = $direccion;
+$_SESSION['adicional'] = $adicional;
 
 switch($method) {
     case "efectivo":

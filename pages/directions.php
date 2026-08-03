@@ -47,14 +47,14 @@ $direcciones = $stmt->fetchAll(PDO::FETCH_ASSOC);
             echo '<span class="edit-success">'.$success.'</span>';
         }
         ?>
-        <div class="space">
+        <div class="directions">
             <div class="direction">
-                <span class="account2-text">Calle</span>
-                <span class="account2-text">Número</span>
-                <span class="account2-text">Información adicional</span>
-                <span class="account2-text">Opciones</span>
+                <span class="directions-main-text">Calle</span>
+                <span class="directions-main-text">Número</span>
+                <span class="directions-main-text">Información adicional</span>
+                <span class="directions-main-text">Opciones</span>
             </div>
-            <hr class="account2-hr">
+            <hr class="direction-hr">
             <?php
             foreach ($direcciones as $direccion) {
                 echo '<div class="direction">';
@@ -72,11 +72,11 @@ $direcciones = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 echo '</form>';
                 echo '</div>';
                 echo '</div>';
-                echo '<hr class="account2-hr">';
+                echo '<hr class="direction-hr">';
             }
             ?>
             <div class="direction">
-                <a href="add_direction.php"><img src="../images/add.png" class="icon"><span class="account2-text">Agregar dirección</span></a>
+                <a href="add_direction.php"><img src="../images/add.png" class="icon"><span class="directions-main-text">Agregar dirección</span></a>
             </div>
         </div>
     </body>

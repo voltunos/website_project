@@ -3,7 +3,7 @@
 session_start();
 require_once 'database.php';
 require_once 'role_verify.php';
-requireRole(["Administrador"], $pdo);
+requireRole(["Administrador", "Dueño"], $pdo);
 
 require_once '../services/image_service.php';
 

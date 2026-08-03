@@ -53,7 +53,7 @@ foreach ($productos as $producto) {
     $total += $subtotal;
 }
 
-$blendPoints = floor(($total + $envio) / 10);
+$blendPoints = floor($total / 10);
 
 $stmt2 = $pdo->prepare("SELECT * FROM direcciones WHERE id_usuario = :id_usuario AND id_direccion = :id_direccion AND activo = 1");
 $stmt2->execute([
@@ -68,7 +68,7 @@ $data = $stmt2->fetch(PDO::FETCH_ASSOC);
 <!DOCTYPE html>
 
 <head>
-    <title>Pago en efectivo</title>
+    <title>Pago con transferencia</title>
 
     <link href="style.css" rel="stylesheet"> 
     <link href="../images/logo_mini.png" rel="icon" type="image/png">
@@ -86,18 +86,31 @@ $data = $stmt2->fetch(PDO::FETCH_ASSOC);
     </header>
     <div class="checkout">
         <div class="account-form-start">
-            <span class="account-form-title">Pago en efectivo</span>
+            <span class="account-form-title">Pago con transferencia</span>
             <img class="logo-big" src="../images/logo_big.png">
         </div>
         <hr class="account-hr">
         <form id="checkout" method="POST" action="process_payment.php">
-            <input type="hidden" name="method" value="efectivo">
+            <input type="hidden" name="method" value="transferencia">
             <input type="hidden" name="id_direccion" value="<?php echo $direccion; ?>">
             <input type="hidden" name="additional" value="<?php echo $additional; ?>">
         </form>
         <div class="checkout-form">
-        <span class="account-form-text"><b>Importe a pagar</b></span>
+            <span class="account-form-text"><b>Dirección de entrega</b></span>
+            <span class="account-form-text"><?php echo htmlspecialchars($data['calle'], ENT_QUOTES, 'UTF-8') . ' ' . htmlspecialchars($data['numero'], ENT_QUOTES, 'UTF-8') ?></span>
+        </div>
+        <div class="checkout-form">
+        <span class="account-form-text"><b>Importe a transferir</b></span>
         <span class="account-form-text">$<?php echo $total; ?></span>
+        </div>
+        <div class="checkout-form">
+        <span class="account-form-text"><b>Alias</b></span>
+        <span class="account-form-text"><?php echo $alias; ?></span>
+        </div>
+        <div class="checkout-form">
+        <span class="account-form-text"><b>Titular de la transferencia</b></span>
+        <input class="account-form-input" type="text" name="titular" placeholder="Titular de la transferencia" form="checkout" required>
+        <span class="account-form-additional">Ingrese el nombre y apellido del titular de la cuenta utilizada para realizar el pago.</span>
         </div>
         <div class="checkout-form">
         <span class="account-form-text"><b>Recompensa</b></span>

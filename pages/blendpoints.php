@@ -4,19 +4,7 @@ session_start();
 require_once 'database.php';
 require_once '../services/image_service.php';
 
-$categoriaSeleccionada = $_GET['category'] ?? null;
-
-if ($categoriaSeleccionada) {
-    $stmt = $pdo->prepare("SELECT * FROM productos WHERE activo = :activo AND categoria = :categoria");
-    $stmt ->execute([
-    ":activo" => 1,
-    ":categoria" => $categoriaSeleccionada
-    ]);
-} else {
-    $stmt = $pdo->prepare("SELECT * FROM productos WHERE activo = 1");
-    $stmt ->execute();
-}
-
+$stmt = $pdo->prepare("SELECT * FROM productos_blend WHERE activo = 1");
 $productos = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 $user_id = $_SESSION['id_usuario'] ?? "";
@@ -29,11 +17,6 @@ if ($user_id) {
     $blendpoints = $stmt2->fetchColumn();
     $blendpoints = $blendpoints !== false ? $blendpoints : 0;
 }
-
-$stmt3 = $pdo->prepare("SELECT * FROM categorias WHERE activo = 1");
-$stmt3 -> execute();
-
-$categorias = $stmt3->fetchAll(PDO::FETCH_ASSOC);
 
 $stmt4 = $pdo->prepare("SELECT * FROM estado WHERE activo = 1 LIMIT 1");
 $stmt4 -> execute();
@@ -90,43 +73,22 @@ $estado = $stmt4->fetch(PDO::FETCH_ASSOC);
         }
         ?>
     </header>
-    <div class="product-types">
-        <div class="type">
-            <a href="main.php" class="type">
-                <img src="../images/all.png" class="type-image">
-                <span class="type-text">Mostrar todo</span>
-            </a>
-        </div>
-        <?php
-        foreach ($categorias as $categoria) {
-            $imagen = ImageService::getImage($categoria['imagen'] ,"../uploads/categories/");
-            echo '<div class="type">';
-            echo '<a href="main.php?category='.$categoria['nombre'].'" class="type">';
-            echo '<img src="'.$imagen.'" class="type-image">';
-            echo '<span class="type-text">'.$categoria['display'].'</span>';
-            echo '</a>';
-            echo '</div>';
-        }
-        ?>
-    </div>
     <div class="products">
         <?php foreach ($productos as $producto) {
             $imagen = ImageService::getImage($producto['imagen'], "../uploads/products/");
-            echo '<form class="product" action="cart_process.php" method="POST">';
-            echo '<a href="product.php?id='.$producto['id_producto'].'">';
+            echo '<form class="product" action="claim.php" method="POST">';
+            echo '<a href="blendproduct.php?id='.$producto['id_producto_blend'].'">';
             echo '<figure>';
             echo '<img src="'.$imagen.'" class="product-image">';
             echo '</figure>';
             echo '</a>';
             echo '<div class="product-info">';
             echo '<span class="product-title">'.$producto['nombre'].'</span>';
-            echo '<span class="product-price">$'.$producto['precio'].'</span>';
+            echo '<span class="product-price">'.$producto['precio_blend'].'</span>';
             echo '<span class="product-description">'.$producto['descripcion'].'</span>';
-            echo '<input type="hidden" name="id_producto" value="'.$producto['id_producto'].'">';
-            echo '<input type="hidden" name="action" value="add">';
-            echo '<input type="hidden" name="redirect" value="main">';
-            echo '<button type="submit" class="product-button">Agregar</button>';
+            echo '<input type="hidden" name="id_producto_blend" value="'.$producto['id_producto_blend'].'">';
             echo '</div>';
+            echo '<button type="submit" class="product-button">Agregar</button>';
             echo '</form>';
         }
         ?>

@@ -4,7 +4,7 @@ session_start();
 require_once 'database.php';
 require_once 'role_verify.php';
 
-requireRole(["Administrador"], $pdo);
+requireRole(["Administrador", "Dueño"], $pdo);
 
 $id = $_POST['id_pedido'] ?? '';
 $action = $_POST['action'] ?? '';

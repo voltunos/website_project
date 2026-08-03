@@ -19,14 +19,14 @@ function requireRole(array $rolesPermitidos, PDO $pdo) {
     $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
     if (!$user || $user['baneado'] == 1) {
-    $_SESSION = [];
-    session_destroy();
-    header("Location: login.php");
-    exit();
+        $_SESSION = [];
+        session_destroy();
+        header("Location: login.php");
+        exit();
+    }
 
     if (!in_array($user['rol'], $rolesPermitidos, true)) {
-    header("Location: main.php");
-    exit();
-}
-}
+        header("Location: main.php");
+        exit();
+    }
 }

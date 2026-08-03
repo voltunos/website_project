@@ -3,7 +3,7 @@
 session_start();
 require_once 'database.php';
 require_once 'role_verify.php';
-requireRole(["Administrador"], $pdo);
+requireRole(["Administrador", "Dueño"], $pdo);
 
 $stmt2 = $pdo->prepare("SELECT * FROM categorias WHERE activo = 1");
 $stmt2->execute();

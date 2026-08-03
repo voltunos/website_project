@@ -1,7 +1,6 @@
 <?php
 
-class ImageService
-{
+class ImageService {
     private static array $allowedTypes = [
         'image/jpeg' => 'jpg',
         'image/png'  => 'png',

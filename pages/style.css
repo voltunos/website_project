@@ -97,7 +97,7 @@ body {
 .account-form-title {
     color: black;
     font-family: "Montserrat", sans-serif;
-    font-size: clamp(0.5vw, 1.75vw, 3vw);
+    font-size: clamp(18px, 0.75vw + 0.75rem, 40px);
     display: -webkit-box;
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 1;
@@ -170,19 +170,19 @@ body {
 }
 
 .logo-big {
-    width: 7.5vw;
-    height: auto;
+    height: clamp(2rem, 2.5vw, 3rem);
+    width: auto;
 }
 
 .text-error {
     color: red;
     font-family: "Montserrat", sans-serif;
-    font-size: 2vh;
+    font-size: clamp(16px, 0.6vw + 0.6rem, 38px);
 }
 .text-success {
     color: green;
     font-family: "Montserrat", sans-serif;
-    font-size: 2vh;
+    font-size: clamp(16px, 0.6vw + 0.6rem, 38px);
 }
 
 .header-right {
@@ -280,7 +280,7 @@ body {
 .products {
     margin: 1% 10% 1% 10%;
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(4, minmax(0, 1fr));
     grid-auto-rows: 1fr;
     gap: 2.5%;
 }
@@ -290,7 +290,6 @@ body {
     background: linear-gradient(0deg, rgba(255, 167, 25, 1) 0%, rgba(255, 225, 0, 1) 100%);
     border: none;
     border-radius: 0 0 15px 15px;
-    overflow: hidden;
     width: 100%;
     box-shadow: 0 0 55px rgba(255, 255, 255, 0.1);
     transition: all .2s;
@@ -311,15 +310,17 @@ body {
     background: #0f0f0f;
 }
 .product-image {
-    width: 75%;
+    max-width: 75%;
+    max-height: 75%;
+    width: auto;
     height: auto;
     object-fit: contain;
     transition: all .2s;
     display: block;
 }
 .product-info {
-    height: auto;
-    margin: 2%;
+    flex: 1;
+    padding: 2%;
     display: flex;
     flex-direction: column;
     gap: 1.5%;
@@ -345,6 +346,8 @@ body {
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 4;
     overflow: hidden;
+    line-height: 1.1;
+    min-height: calc(1.1em * 4);
 }
 .product-button {
     font-family: "Montserrat", sans-serif;
@@ -353,13 +356,12 @@ body {
     border-radius: 0 0 15px 15px;
     color: white;
     background-color: #0f0f0f;
-    height: 5vh;
-    margin-top: auto;
-    margin-bottom: 2%;
+    padding: 3%;
+    margin-bottom: 2.5%;
     cursor: pointer;
     transition: all .2s;
     align-self: center;
-    width: 95%;
+    width: 100%;
 }
 .product-button:hover {
     background-color: #1f1f1f;
@@ -408,13 +410,54 @@ body::before {
     margin: 1%;
     color: white;
     font-family: "Montserrat", sans-serif;
-    font-size: 2.5vw;
+    font-size: clamp(24px, 1.35vw + 0.7rem, 52px);
     font-weight: bold;
+}
+.directions {
+    background-color: #0f0f0f;
+    box-shadow: 0 0 55px rgba(255, 255, 255, 0.1);
+    border-radius: 15px;
+    padding: 1%;
+    width: 65%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    flex-direction: column;
+    gap: 5%;
+}
+.directions-view {
+    background-color: #0f0f0f;
+    box-shadow: 0 0 55px rgba(255, 255, 255, 0.1);
+    border-radius: 15px;
+    padding: 1%;
+    width: 75%;
+    display: flex;
+    flex-direction: column;
+    gap: 5%;
+    justify-self: center;
+    margin-top: 2.5%;
+}
+.direction-hr {
+    width: 100%;
+    height: 1px;
+    background-color: white;
+    border: none;
+}
+.directions-main-text {
+    color: white;
+    font-family: "Montserrat", sans-serif;
+    font-size: clamp(16px, 0.65vw + 0.65rem, 38px);
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
+    overflow: hidden;
 }
 .directions-text {
     color: white;
     font-family: "Montserrat", sans-serif;
-    font-size: clamp(0.25vw, 1vw, 2vw);
+    font-size: clamp(14px, 0.5vw + 0.5rem, 32px);
     display: -webkit-box;
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 1;
@@ -423,18 +466,30 @@ body::before {
 .directions-description {
     color: white;
     font-family: "Montserrat", sans-serif;
-    font-size: clamp(0.25vw, 0.75vw, 1vw);
+    font-size: clamp(12px, 0.4vw + 0.4rem, 28px);
     display: -webkit-box;
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 1;
     overflow: hidden;
 }
+.directions-view-text {
+    color: white;
+    font-family: "Montserrat", sans-serif;
+    font-size: clamp(14px, 0.5vw + 0.5rem, 32px);
+    text-align: justify;
+}
+.directions-view-description {
+    color: white;
+    font-family: "Montserrat", sans-serif;
+    font-size: clamp(12px, 0.4vw + 0.4rem, 28px);
+    text-align: justify;
+}
 .direction-buttons {
     display: flex;
     width: 100%;
-    justify-content: space-between;
+    justify-content: left;
     align-items: center;
-    gap: 0.5vw;
+    gap: 1%;
 }
 .direction-edit {
     background-color: dodgerblue;
@@ -442,7 +497,8 @@ body::before {
     border: none;
     border-radius: 5px;
     font-family: "Montserrat", sans-serif;
-    font-size: clamp(0.5vw, 1vw, 2vw);
+    font-size: clamp(12px, 0.4vw + 0.4rem, 28px);
+    padding: 1%;
     transition: all .2s;
     cursor: pointer;
 }
@@ -455,7 +511,8 @@ body::before {
     border: none;
     border-radius: 5px;
     font-family: "Montserrat", sans-serif;
-    font-size: clamp(0.5vw, 1vw, 2vw);
+    font-size: clamp(12px, 0.4vw + 0.4rem, 28px);
+    padding: 1%;
     transition: all .2s;
     cursor: pointer;
 }
@@ -469,7 +526,7 @@ body::before {
     margin: 1%;
     color: red;
     font-family: "Montserrat", sans-serif;
-    font-size: 1.5vw;
+    font-size: clamp(16px, 0.6vw + 0.6rem, 38px);
 }
 .edit-success {
     display: flex;
@@ -477,7 +534,7 @@ body::before {
     margin: 1%;
     color: green;
     font-family: "Montserrat", sans-serif;
-    font-size: 1.5vw;
+    font-size: clamp(16px, 0.6vw + 0.6rem, 38px);
 }
 
 .reduced-space {
@@ -643,15 +700,18 @@ body::before {
 
 .cart {
     display: flex;
-    margin: 2.5% 12.5% 2.5% 12.5%;
-    width: 75%;
+    margin: 2.5% 10% 2.5% 10%;
+    width: 80%;
     justify-content: space-between;
 }
 .cart-products {
     display: flex;
     flex-direction: column;
-    gap: 5%;
     width: 65%;
+    background-color: #1f1f1f;
+    box-shadow: 0 0 55px rgba(255, 255, 255, 0.1);
+    padding: 1%;
+    border-radius: 15px;
 }
 .cart-product {
     display: grid;
@@ -659,28 +719,33 @@ body::before {
     grid-template-columns: repeat(auto-fit, minmax(1vw, 1fr));
     gap: 2%;
     border-bottom: 1px solid white;
-    padding-bottom: 1.5vh;
+    padding-top: 1%;
+    padding-bottom: 1%;
 }
 .cart-product figure {
-    background: white;
-    border-radius: 8px;
-    width: 5vw;
-    height: auto;
+    width: 80%;
     aspect-ratio: 1/1;
     display: flex;
     align-items: center;
     justify-content: center;
     margin: 0;
+    background: white;
+    border: none;
+    border-radius: 15px;
 }
 .cart-product-image {
-    width: 90%;
+    max-width: 90%;
+    max-height: 90%;
+    width: auto;
     height: auto;
-    object-fit: cover;
+    object-fit: contain;
+    transition: all .2s;
+    display: block;
 }
 .cart-product-text {
     color: white;
     font-family: "Montserrat", sans-serif;
-    font-size: clamp(0.25vw, 1vw, 2vw);
+    font-size: clamp(14px, 0.5vw + 0.5rem, 32px);
     font-weight: bold;
     display: -webkit-box;
     -webkit-box-orient: vertical;
@@ -694,7 +759,7 @@ body::before {
     width: 100%;
 }
 .cart-payment {
-    border-radius: 20px;
+    border-radius: 25px;
     background-color: white;
     width: 30%;
     height: 100%;
@@ -711,7 +776,7 @@ body::before {
 }
 .cart-number {
     font-family: 'Montserrat' sans-serif;
-    font-size: clamp(0.25vw, 0.75vw, 1.5vw);
+    font-size: clamp(14px, 0.5vw + 0.5rem, 32px);
     width: 50%;
     height: 20%;
     border: none;
@@ -724,8 +789,18 @@ body::before {
     border: none;
     color: white;
     background-color: darkred;
-    font-weight: bold;
-    font-size: clamp(0.25vw, 0.75vw, 1.5vw);
+    font-size: clamp(14px, 0.5vw + 0.5rem, 32px);
+    cursor: pointer;
+}
+.cart-add {
+    font-family: 'Montserrat' sans-serif;
+    width: 15%;
+    height: 20%;
+    border-radius: 0 5px 5px 0;
+    border: none;
+    color: white;
+    background-color: darkgreen;
+    font-size: clamp(14px, 0.5vw + 0.5rem, 32px);
     cursor: pointer;
 }
 .purchase {
@@ -736,8 +811,7 @@ body::before {
 .purchase-info {
     color: black;
     font-family: "Montserrat", sans-serif;
-    font-size: clamp(0.25vw, 0.75vw, 1.5vw);
-    font-weight: 300;
+    font-size: clamp(12px, 0.4vw + 0.4rem, 28px);
     display: -webkit-box;
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 2;
@@ -745,8 +819,8 @@ body::before {
 .purchase-price {
     color: black;
     font-family: "Montserrat", sans-serif;
-    font-size: clamp(0.25vw, 0.75vw, 1.5vw);
-    font-weight: 500;
+    font-size: clamp(12px, 0.4vw + 0.4rem, 28px);
+    font-weight: bold;
     display: -webkit-box;
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 2;
@@ -768,18 +842,6 @@ body::before {
     align-items: center;
     gap: 1%;
     justify-content: center;
-}
-.cart-add {
-    font-family: 'Montserrat' sans-serif;
-    width: 15%;
-    height: 20%;
-    border-radius: 0 5px 5px 0;
-    border: none;
-    color: white;
-    background-color: darkgreen;
-    font-weight: bold;
-    font-size: clamp(0.25vw, 0.75vw, 1.5vw);
-    cursor: pointer;
 }
 .cart-direction {
     color: black;
@@ -842,10 +904,17 @@ body::before {
     justify-content: space-between;
 }
 .orders {
+    background-color: #0f0f0f;
+    box-shadow: 0 0 55px rgba(255, 255, 255, 0.1);
+    border-radius: 15px;
+    padding: 1%;
     width: 75%;
     display: flex;
     flex-direction: column;
     gap: 2%;
+    max-height: 70vh;
+    overflow-x: auto;
+    scrollbar-color: grey black;
 }
 .order {
     background-color: black;
@@ -948,7 +1017,7 @@ body::before {
 }
 
 .order-filters {
-    width: 24%;
+    width: 22%;
 }
 .order-filter-box {
     background-color: white;
@@ -1087,6 +1156,18 @@ body::before {
     filter: brightness(0.75);
 }
 
+.user-Cliente {
+    color: white;
+    font-family: "Montserrat", sans-serif;
+    font-size: clamp(14px, 0.5vw + 0.5rem, 32px);
+    font-weight:600;
+}
+.user-Delivery {
+    color: yellow;
+    font-family: "Montserrat", sans-serif;
+    font-size: clamp(14px, 0.5vw + 0.5rem, 32px);
+    font-weight:600;
+}
 .user-Administrador {
     color: red;
     font-family: "Montserrat", sans-serif;
@@ -1098,11 +1179,16 @@ body::before {
     0 0 4px red,
     0 0 8px red;
 }
-.user-Cliente {
-    color: white;
+.user-Dueño {
+    color: gold;
     font-family: "Montserrat", sans-serif;
     font-size: clamp(14px, 0.5vw + 0.5rem, 32px);
     font-weight:600;
+    text-shadow: 
+    0 0 1px gold,
+    0 0 2px gold,
+    0 0 4px gold,
+    0 0 8px gold;
 }
 
 .profile {
@@ -1124,6 +1210,8 @@ body::before {
     justify-content: center;
     background: black;
     border: none;
+    border-radius: 50%;
+    overflow: hidden;
 }
 .profile-image {
     max-width: 100%;
@@ -1261,9 +1349,18 @@ body::before {
 .modal-button:hover {
     filter: brightness(0.75);
 }
+.modal-input {
+    color: black;
+    font-family: "Montserrat", sans-serif;
+    font-size: clamp(14px, 0.5vw + 0.5rem, 32px);
+    margin-top: 1%;
+}
 
 .myprofile {
     background-color: #0f0f0f;
+    box-shadow: 0 0 55px rgba(255, 255, 255, 0.1);
+    border-radius: 15px;
+    padding: 1%;
     width: 50%;
     height: 60%;
     position: absolute;
@@ -1271,9 +1368,6 @@ body::before {
     left: 50%;
     transform: translate(-50%, -50%);
     display: flex;
-    box-shadow: 0 0 55px rgba(255, 255, 255, 0.1);
-    border-radius: 15px;
-    padding: 1%;
     gap: 5%;
 }
 .myprofile-tabs {
@@ -1305,7 +1399,7 @@ body::before {
     gap: 1%;
 }
 .myprofile-figure {
-    width: 15%;
+    width: 17.5%;
     aspect-ratio: 1/1;
     display: flex;
     margin: 0;
@@ -1313,6 +1407,8 @@ body::before {
     justify-content: center;
     background: black;
     border: none;
+    overflow: hidden;
+    border-radius: 50%;
 }
 .myprofile-image {
     max-width: 100%;
@@ -1377,12 +1473,76 @@ body::before {
     filter: brightness(0.75);
 }
 
+.user-manage {
+    background-color: white;
+    width: 70%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    flex-direction: column;
+    border-radius: 15px;
+    padding: 1%;
+}
+.user-manage-line {
+    display: grid;
+    align-items: center;
+    grid-template-columns: repeat(auto-fit, minmax(1vw, 1fr));
+    gap: 2%;
+    margin: 0.1% 0 0.1% 0;
+}
+.user-manage-hr {
+    width: 100%;
+    border: none;
+    background-color: black;
+    height: 1px;
+}
+.user-manage-text {
+    color: black;
+    font-family: "Montserrat", sans-serif;
+    font-size: clamp(13px, 0.45vw + 0.45rem, 28px);
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
+    overflow: hidden;
+}
+.user-manage-pages {
+    width: 100%;
+    display :flex;
+    justify-content: center;
+    gap: 2%;
+    margin: 0.5% 0 0.5% 0;
+}
+
 @media (orientation: portrait) {
     .hide-mobile {
         display: none;
     }
+    .cart {
+        flex-direction: column;
+        align-items: center;
+        margin: 2.5% 5% 2.5% 5%;
+        width: 90%;
+        gap: 2vh;
+    }
+    .cart-products {
+        width: 100%;
+    }
+    .cart-payment {
+        width: 90%;
+        padding: 2.5%;
+    }
+
+    .directions {
+        width: 90%;
+    }
+    .directions-view {
+        width: 90%;
+    }
+
     .products {
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: repeat(2, minmax(0, 1fr));
     }
     .viewer-figure {
         height: 50%;
@@ -1406,5 +1566,13 @@ body::before {
     }
     .modal-content {
         width: 75%;
+    }
+
+    .myprofile {
+        width: 90%;
+    }
+    
+    .user-manage {
+        width: 90%;
     }
 }
