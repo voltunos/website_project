@@ -103,6 +103,10 @@ Example:
 PORT=3000
 MERCADOPAGO_API_KEY=YOUR_ACCESS_TOKEN
 FRONTEND_URL=http://localhost/website_project/pages
+DB_HOST=localhost
+DB_USER=YOUR_DB_USER
+DB_PASSWORD=YOUR_DB_PASSWORD
+DB_NAME=blendburger
 ```
 
 ---
