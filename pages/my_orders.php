@@ -2,16 +2,16 @@
 
 session_start();
 require_once 'database.php';
+require_once 'auth.php';
 require_once '../services/image_service.php';
-require_once 'role_verify.php';
-requireRole(["Administrador", "Dueño"], $pdo);
 
 $estado = $_GET['estado'] ?? '';
 $orden = $_GET['orden'] ?? 'asc';
 
-$query = "SELECT * FROM pedido WHERE estado NOT IN ('Completado', 'Cancelado', 'Esperando reembolso')";
+$query = "SELECT * FROM pedido WHERE id_usuario = :id_usuario";
 $params = [];
 
+$params[':id_usuario'] = $_SESSION['id_usuario'];
 if (!empty($estado)) {
     $query .= " AND estado = :estado";
     $params[':estado'] = $estado;
@@ -30,7 +30,7 @@ $pedidos = $stmt->fetchAll(PDO::FETCH_ASSOC);
 <!DOCTYPE html>
 
 <head>
-    <title>Pedidos</title>
+    <title>Mis pedidos</title>
 
     <link href="style.css" rel="stylesheet"> 
     <link href="../images/logo_mini.png" rel="icon" type="image/png">
@@ -46,7 +46,7 @@ $pedidos = $stmt->fetchAll(PDO::FETCH_ASSOC);
         <a href="main.php"><img class ="logo" src="../images/logo.png"></a>
         <a href="account.php"><span class="uitext">Volver</span></a>
     </header>
-    <span class="edit-title">Pedidos</span>
+    <span class="edit-title">Mis pedidos</span>
     <div class="order-body">
         <div class="orders">
             <?php
@@ -66,19 +66,10 @@ $pedidos = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 "cancelled" => "darkred",
                 "refund" => "dimgray"
             ];
-            $actionsByState = [
-                "processing" => ["confirm", "deliver", "complete", "cancel"],
-                "confirmed" => ["deliver", "complete", "cancel"],
-                "delivering" => ["complete", "cancel"],
-                "completed" => [],
-                "cancelled" => [],
-                "refund" => ["cancel"]
-            ];
 
             foreach($pedidos as $pedido) {
                 $pedidoState = $pedido['estado'];
                 $state = $states[$pedidoState] ?? 'unknown';
-                $availableActions = $actionsByState[$state] ?? [];
                 $id = $pedido['id_pedido'];
 
                 // Get address
@@ -100,7 +91,6 @@ $pedidos = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 echo '<div class="order-main-bg" style="background-color: '.$stateBgColors[$state].'">';
                 echo '<div class="order-main">';
                 echo '<span class="order-text"><b>ID pedido:</b> '.$id.'</span>';
-                echo '<a href="user.php?id='.$pedido['id_usuario'].'" class="order-text"><b>ID usuario:</b> '.$pedido['id_usuario'].'</a>';
                 echo '<span class="order-text"><b>Fecha:</b> '.$pedido['fecha'].'</span>';
                 echo '<span class="order-text"><b>Total:</b> $'.$pedido['total'].'</span>';
                 echo '<span class="order-text"><b>Método de pago:</b> '.$pedido['metodo_pago'].'</span>';
@@ -138,41 +128,6 @@ $pedidos = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     echo '<span class="order-item-info">$'.$item['precio'].'</span>';
                     echo '<span class="order-item-info">$'.$item['precio'] * $item['cantidad'].'</span>';
                     echo '</div>';
-                }
-                echo '</div>';
-                echo '<div class="order-buttons">';
-                foreach($availableActions as $action) {
-                    echo '<form action="order_action.php" method="POST">';
-                    echo '<input type="hidden" name="action" value="'.$action.'">';
-                    echo '<input type="hidden" name="id_pedido" value="'.$id.'">';
-                    $text = "";
-                    $bg = "";
-
-                    switch($action) {
-                        case "confirm":
-                            $text = "Confirmar pedido";
-                            $bg = "confirmed";
-                            break;
-                        case "deliver":
-                            $text = "Confirmar envío";
-                            $bg = "delivering";
-                            break;
-                        case "complete":
-                            $text = "Marcar como completado";
-                            $bg = "completed";
-                            break;
-                        case "cancel":
-                            $text = "Cancelar pedido";
-                            $bg = "cancelled";
-                            break;
-                        case "refund":
-                            $text = "Marcar como reembolsado";
-                            $bg = "refund";
-                            break;
-                    }
-                        
-                    echo '<button class="order-button" style="background-color:'.$stateBgColors[$bg].'" type="submit">'.$text.'</button>';
-                    echo '</form>';
                 }
                 echo '</div>';
                 echo '</div>';

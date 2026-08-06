@@ -2,6 +2,7 @@
 
 session_start();
 require_once 'auth.php';
+require_once 'database.php';
 require_once 'cart_check.php';
 
 if (!isset($_SESSION['id_direccion'])) {

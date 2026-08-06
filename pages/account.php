@@ -44,7 +44,7 @@ $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
             <a href="directions.php"><img src="../images/direction.png" class="icon"><span class="account2-text">Direcciones</span></a>
         </div>
         <div class="account2-info">
-            <a href="myorders.php"><img src="../images/myorders.png" class="icon"><span class="account2-text">Mis pedidos</span></a>
+            <a href="my_orders.php"><img src="../images/myorders.png" class="icon"><span class="account2-text">Mis pedidos</span></a>
         </div>
         <div class="account2-info">
             <a href="blendpoints.php"><img src="../images/blendpoints_white.png" class="icon"><span class="account2-text">Puntos Blend</span></a>

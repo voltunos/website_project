@@ -992,9 +992,12 @@ body::before {
     margin: 0;
 }
 .order-img {
-    width: 90%;
+    max-width: 90%;
+    max-height: 90%;
+    width: auto;
     height: auto;
-    object-fit: cover;
+    object-fit: contain;
+    display: block;
 }
 .order-buttons {
     width: 80%;

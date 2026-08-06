@@ -29,13 +29,13 @@ $roleCheck->execute([
 ]);
 
 $userRole = $roleCheck->fetchColumn();
-if ($userRole == "Dueño") {
-    $_SESSION['error'] = "No puedes realizar esta acción sobre este usuario.";
-    header("Location: user.php?id=".$id."");
-    exit();
-}
 
 if ($option == "ban") {
+    if ($userRole == "Dueño") {
+        $_SESSION['error'] = "No puedes realizar esta acción sobre este usuario.";
+        header("Location: user.php?id=".$id."");
+        exit();
+    }
     try {
         $stmt = $pdo->prepare("UPDATE users SET baneado = 1 WHERE id_usuario = :id_usuario LIMIT 1");
         $stmt->execute([
@@ -49,6 +49,11 @@ if ($option == "ban") {
         $_SESSION['error'] = $e->getMessage();
     }
 } else if ($option == "unban") {
+    if ($userRole == "Dueño") {
+        $_SESSION['error'] = "No puedes realizar esta acción sobre este usuario.";
+        header("Location: user.php?id=".$id."");
+        exit();
+    }
     try {
         $stmt = $pdo->prepare("UPDATE users SET baneado = 0 WHERE id_usuario = :id_usuario LIMIT 1");
         $stmt->execute([
@@ -62,6 +67,11 @@ if ($option == "ban") {
         exit();
     }
 } else if ($option == "role") {
+    if ($userRole == "Dueño") {
+        $_SESSION['error'] = "No puedes realizar esta acción sobre este usuario.";
+        header("Location: user.php?id=".$id."");
+        exit();
+    }
     try {
         $rolesAvailable = ["client", "admin", "delivery"];
         if (empty($additional)) {
