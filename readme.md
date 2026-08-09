@@ -1,6 +1,6 @@
 # BlendBurger
 
-A restaurant web page built in with PHP, MySQL, JavaScript and Node.js.
+A restaurant web application built with PHP, MySQL, JavaScript and Node.js.
 
 The project allows customers to browse products, manage their cart, place orders, and pay online through Mercado Pago. It also includes a complete administration panel for managing users, products, categories, orders, addresses, and application settings.
 
@@ -80,17 +80,27 @@ project/
 
 ## Installation
 
-### 1. Clone the repository
+### 1. Prerequisites
+
+#### Required:
+- XAMPP (Apache, PHP, MySQL)
+- Node.js and npm
+- Git
+- Modern web browser
+
+#### Required for payment/webhook testing:
+- Ngrok account
+- Mercado Pago developer account/access token
+
+#### Optional:
+- Visual Studio Code or another code editor
+
+### 2. Clone the repository
+
+Clone the repository inside XAMPP's htdocs directory so Apache can serve the PHP application.
 
 ```bash
-git clone https://github.com/voltunos/website_project/blendburger.git
-```
-
-### 2. Install Node dependencies
-
-```bash
-cd node
-npm install
+git clone https://github.com/voltunos/website_project.git
 ```
 
 ### 3. Configure environment variables
@@ -106,25 +116,25 @@ FRONTEND_URL=http://localhost/website_project/pages
 DB_HOST=localhost
 DB_USER=YOUR_DB_USER
 DB_PASSWORD=YOUR_DB_PASSWORD
-DB_NAME=blendburger
+DB_NAME=YOUR_DB_NAME
 ```
 
 ---
 
-### 4. Import the database
-
-Import the provided SQL file into MySQL.
-
-Update `database.php` with your database credentials.
-
----
-
-### 5. Start XAMPP
+### 4. Start XAMPP
 
 Start:
 
 - Apache
 - MySQL
+
+---
+
+### 5. Import the database
+
+Import the provided SQL file into MySQL.
+
+Update `database.php` with your database credentials.
 
 ---
 
@@ -140,6 +150,14 @@ npm run dev
 
 Mercado Pago webhooks require a public HTTPS URL.
 
+Before hosting any local server with Ngrok, make sure you're logged in by using this command:
+
+```bash
+ngrok config add-authtoken $YOUR_AUTHTOKEN
+```
+
+You can copy your Authtoken by logging in Ngrok via a web browser > Your authtoken
+
 Expose your local server:
 
 ```bash
@@ -151,7 +169,7 @@ Copy the generated HTTPS URL and update:
 - `notification_url`
 - `back_urls`
 
-inside the Mercado Pago configuration.
+inside the Mercado Pago configuration (src > controllers > payment-controller.js). Also make sure you don't overwrite the "/api/..." part.
 
 ---
 
