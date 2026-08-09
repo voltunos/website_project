@@ -72,7 +72,6 @@ project/
 │   ├── states/
 │   └── users/
 ├── images/
-├── node_modules/
 └── README.md
 ```
 
